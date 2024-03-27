@@ -1,6 +1,6 @@
 module.exports = {
     apps : [{
-        name: "solve",
+        name: "aws-rds-demo",
         script: "npm",
         args: "start",
         env: {

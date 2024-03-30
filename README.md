@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EC2 ubuntu22 Nginx ssl 연습
 
-## Getting Started
+### Aws EC2 인스턴스 생성
+프리티어로 하나 만들고 만들때 생성된 pem키 ssh폴더에 pem폴더 하나 만들어서 넣어준다
+config하나 만들어서 키관리할 수 있게 작성해준다.
+pem파일 권한 수정하고
+ssh 로 ec2로 원격접속 진행
 
-First, run the development server:
+ec2에 접속하면 port번호를 바꿔준다.
+ect폴더는 window의 프로그램폴더, mac의 응용프로그램폴더처럼 설치한 프로그램들이 깔리는 폴더다.
+ect/ssh/sshd_config 에서 port를 설정해준다.
+설정안해주면 기본포트인 22번으로 받는데
+그럼 해킹에 너무 취약해지기 때문에 다른걸로 바꿔줘야한다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+config 파일에서도 포트를 바꿔적어줘야한다. 근데 잘못되면 두번다시 인스턴스 접근을 못하게 될거니 해당 서버에서 나가면 안된다.
+터미널 하나 새로파서 테스트 진행
+당연히 안된다.
+이제 aws에서 만든 인스턴스 안에 들어가서 보안규칙을 수정해줘야한다.
+인바운드 아웃바운드가 있는데
+인바운드는 이 서버 들어갈때 포트를 제한걸어버리는거고
+아웃바운드는 이 서버 나갈때 포트 제한을 걸어버리는거다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+일단 http와 https 프로토폴이 사용하는 80번과 443번포트는 그대로 나두고
+ssh의 포트를 바꿔줘야한다.
+22번포트를 삭제하고 다른 수정한 포트로 바꿔준다. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+나갈때는 모든 포트로 나갈수 있어야하니 아웃바운드는 건드리지말고
+이제 다시 ssh로 접근해보면 들어가진다.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

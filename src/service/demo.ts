@@ -13,3 +13,13 @@ export function pong(){
         url:'/pong'
     })
 }
+
+export function sendMail(email:string){
+    return request({
+        method:'POST',
+        url:'/sendMail',
+        data:{
+            email:email
+        }
+    })
+}
